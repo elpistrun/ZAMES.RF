@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Иерархия - ZAMES Server</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hierarchy-page {
+            background-color: #111111; 
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .hierarchy-container {
+            max-width: 900px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hierarchy-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Стили для дерева иерархии */
+        .hierarchy-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 60px;
+            width: 100%;
+        }
+
+        .role-node {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            transition: transform 0.2s, text-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .role-node:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px currentColor; 
+        }
+
+        .role-line {
+            width: 2px;
+            height: 35px;
+            background-color: #555555;
+        }
+
+        /* Точные цвета ролей для текста (соответствуют вашим rgb) */
+        .color-superadmin { color: #ff0000; }
+        .color-admin { color: rgb(15,100,4); }
+        .color-mpiar { color: rgb(211,36,123); }
+        .color-dadmin { color: rgb(33,187,13); }
+        .color-doperator { color: rgb(0,183,255); }
+        .color-piar { color: rgb(255,98,111); }
+        .color-megasponsor { color: rgb(255,153,0); }
+
+        .roles-description-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .role-details {
+            background: #1a1a1a;
+            border-left: 5px solid;
+            padding: 20px 25px;
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.2s;
+            scroll-margin-top: 100px;
+        }
+
+        .role-details:hover {
+            transform: translateX(5px);
+        }
+
+        .role-details h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .role-details ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .role-details ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .role-details ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: inherit;
+            font-weight: bold;
+        }
+
+        /* Точные цвета левой рамки (соответствуют вашим rgb) */
+        .border-superadmin { border-left-color: #ff0000; }
+        .border-admin { border-left-color: rgb(15,100,4); }
+        .border-mpiar { border-left-color: rgb(211,36,123); }
+        .border-dadmin { border-left-color: rgb(33,187,13); }
+        .border-doperator { border-left-color: rgb(0,183,255); }
+        .border-piar { border-left-color: rgb(255,98,111); }
+        .border-megasponsor { border-left-color: rgb(255,153,0); }
+
+    </style>
+</head>
+<body class="hierarchy-page">
+    
+    <!-- Навигация (Navbar) -->
+    <nav class="navbar rules-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="pngs/logo.png" alt="ZAMES Logo" class="logo-img">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-btn">Главная</a></li>
+            <li><a href="ier.html" class="nav-btn" style="color: #ff0000;">Иерархия</a></li>
+            <li class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()">Правила сервера</button>
+                <div class="dropdown-content" id="rulesDropdown">
+                    <a href="rules.html#general">Общие правила</a>
+                    <a href="rules.html#admins">Правила админов</a>
+                </div>
+            </li>
+            
+            <!-- Разделитель и иконки -->
+            <li class="nav-divider"></li>
+            <li class="social-icon">
+                <a href="https://discord.gg/qqtvS5jfRs" target="_blank">
+                    <img src="pngs/ds.png" alt="Discord">
+                </a>
+            </li>
+            <li class="social-icon">
+                <a href="https://www.youtube.com/@zamesrf" target="_blank">
+                    <img src="pngs/yt.png" alt="YouTube">
+                </a>
+            </li>
+            <li class="social-icon">
+                <a href="https://tiktok.com/@zamesrf" target="_blank">
+                    <img src="pngs/tk.png" alt="TikTok">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="hierarchy-container">
+        <h1 class="hierarchy-title">Иерархия администрации</h1>
+        
+        <div class="hierarchy-tree">
+            <a href="#superadmin" class="role-node color-superadmin">SUPERADMIN</a>
+            <div class="role-line"></div>
+            
+            <a href="#dsuperadmin" class="role-node color-superadmin">DSUPERADMIN</a>
+            <div class="role-line"></div>
+            
+            <a href="#admin" class="role-node color-admin">ADMIN</a>
+            <div class="role-line"></div>
+            
+            <a href="#operator" class="role-node color-admin">OPERATOR</a>
+            <div class="role-line"></div>
+            
+            <a href="#mpiar" class="role-node color-mpiar">МПИАРАГЕНТ</a>
+            <div class="role-line"></div>
+            
+            <a href="#dadmin" class="role-node color-dadmin">DADMIN</a>
+            <div class="role-line"></div>
+            
+            <a href="#doperator" class="role-node color-doperator">DOPERATOR</a>
+            <div class="role-line"></div>
+            
+            <a href="#piar" class="role-node color-piar">PIAR</a>
+            <div class="role-line"></div>
+            
+            <a href="#megasponsor" class="role-node color-megasponsor">MEGASPONSOR</a>
+        </div>
+
+        <h2 class="hierarchy-title" style="font-size: 2rem; margin-top: 20px;">Возможности ролей</h2>
+        
+        <div class="roles-description-container">
+            
+            <div id="superadmin" class="role-details border-superadmin">
+                <h3 class="color-superadmin">SUPERADMIN</h3>
+                <ul style="color: #ff0000;">
+                    <li>Полный доступ к серверу</li>
+                    <li>Выдача наказаний и управление персоналом</li>
+                    <li>Изменение конфигураций</li>
+                </ul>
+            </div>
+
+            <div id="dsuperadmin" class="role-details border-superadmin">
+                <h3 class="color-superadmin">DSUPERADMIN</h3>
+                <ul style="color: #ff0000;">
+                    <li>Практически полный доступ</li>
+                    <li>Помощь SUPERADMIN'у</li>
+                </ul>
+            </div>
+            
+            <div id="admin" class="role-details border-admin">
+                <h3 class="color-admin">ADMIN</h3>
+                <ul style="color: rgb(15,100,4);">
+                    <li>Следит за порядком на сервере</li>
+                    <li>Выдача банов/мутов/варнов</li>
+                    <li>Доступ к админ-чату</li>
+                </ul>
+            </div>
+
+            <div id="operator" class="role-details border-admin">
+                <h3 class="color-admin">OPERATOR</h3>
+                <ul style="color: rgb(15,100,4);">
+                    <li>Начальная модерация</li>
+                    <li>Доступ к логам сервера</li>
+                    <li>Ответ на репорты</li>
+                </ul>
+            </div>
+
+            <div id="mpiar" class="role-details border-mpiar">
+                <h3 class="color-mpiar">МПИАРАГЕНТ</h3>
+                <ul style="color: rgb(211,36,123);">
+                    <li>Управление пиаром проекта</li>
+                    <li>Специальные команды для мероприятий</li>
+                </ul>
+            </div>
+
+            <div id="dadmin" class="role-details border-dadmin">
+                <h3 class="color-dadmin">DADMIN</h3>
+                <ul style="color: rgb(33,187,13);">
+                    <li>Все тоже самое что и у DOPERATOR</li>
+                    <li>Приотритет над DOPERATOR , забанить не сможет</li>
+                    <li>более 15+ команды (health,jail,sslay , slay и т.д), (бан максимум 10 часов  , и только 5 человека раз в 30 минут)</li>
+                    <li>Каждый час будет давать коины 250 CFC</li>
+                </ul>
+            </div>
+
+            <div id="doperator" class="role-details border-doperator">
+                <h3 class="color-doperator">DOPERATOR</h3>
+                <ul style="color: rgb(0,183,255);">
+                    <li>Все тоже самое что у MEGASPONSOR</li>
+                    <li>Spawn Menu</li>
+                    <li>Context Menu</li>
+                    <li>noclip , god , ban (максимум 5 часов , и только 3 человека раз в 30 минут)</li>
+                    <li>Роль в дс сервере</li>
+                    <li>Каждый час будет давать коины 125 CFC</li>
+                </ul>
+            </div>
+
+            <div id="piar" class="role-details border-piar">
+                <h3 class="color-piar">PIAR</h3>
+                <ul style="color: rgb(255,98,111);">
+                    <li>Помощь в пиаре</li>
+                    <li>Особый префикс</li>
+                    <li>Spawnmenu</li>
+                    <li>noclip, respawn</li>
+                    <li>за каждые 1к просмотров будет выдаваться 1.OOO CFC</li>
+                </ul>
+            </div>
+            
+            <div id="megasponsor" class="role-details border-megasponsor">
+                <h3 class="color-megasponsor">MEGASPONSOR</h3>
+                <ul style="color: rgb(255,153,0);">
+                    <li>Роль в дс сервере</li>
+                    <li>Даваться будут бесплатные фоны</li>
+                    <li>Каждый час будет давать коины 100 CFC</li>
+                    <li>Уменьшенный гилт системы</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const roleLinks = document.querySelectorAll(".hierarchy-tree a.role-node");
+
+            roleLinks.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute("href").substring(1); 
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: "smooth" });
+
+                        targetSection.classList.remove("flash-highlight");
+                        void targetSection.offsetWidth;
+                        targetSection.classList.add("flash-highlight");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

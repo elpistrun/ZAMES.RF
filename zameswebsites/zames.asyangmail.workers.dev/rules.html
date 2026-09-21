@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Правила сервера ZAMES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="rules-page">
+    <nav class="navbar rules-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="pngs/logo.png" alt="ZAMES Logo" class="logo-img">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-btn">Главная</a></li>
+            <li><a href="ier.html" class="nav-btn">Иерархия</a></li>
+            <li class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()">Правила сервера</button>
+                <div class="dropdown-content" id="rulesDropdown">
+                    <a href="rules.html#general">Общие правила</a>
+                    <a href="rules.html#admins">Правила админов</a>
+                </div>
+            </li>
+            
+            <!-- Разделитель и иконки -->
+            <li class="nav-divider"></li>
+            <li class="social-icon">
+                <a href="https://discord.gg/qqtvS5jfRs" target="_blank">
+                    <img src="pngs/ds.png" alt="Discord">
+                </a>
+            </li>
+            <li class="social-icon">
+                <a href="https://www.youtube.com/@zamesrf" target="_blank">
+                    <img src="pngs/yt.png" alt="YouTube">
+                </a>
+            </li>
+            <li class="social-icon">
+                <a href="https://tiktok.com/@zamesrf" target="_blank">
+                    <img src="pngs/tk.png" alt="TikTok">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="rules-container">
+        <!-- Левая часть: Контент правил -->
+        <main class="rules-content">
+            <h1>Официальные правила сервера <span class="highlight">ZAMES</span></h1>
+            <p class="rules-intro">
+                Данные правила прописаны создателем сервера и используются на серверах ZAMES. <br>
+                <strong>Незнание правил сервера не освобождает вас от ответственности!</strong>
+            </p>
+
+            <h2 id="general">Общие правила</h2>
+            
+            <section id="rdm-tk" class="rule-section">
+                <h3>RDM / TK</h3>
+                <div class="rule-item">
+                    <strong>1.1) ТК</strong> — Убивание своих людей без основания.
+                    <span class="punishment">Наказание: бан до 2 часов</span>
+                </div>
+                <div class="rule-item">
+                    <strong>1.2) RDM</strong> — Убивание множества людей (от 3) без ведомой причины.
+                    <span class="punishment">Наказание: бан до 4 часов</span>
+                </div>
+            </section>
+
+            <section id="chat-voice" class="rule-section">
+                <h3>Правила голосового и текстового чата</h3>
+                <div class="rule-item">
+                    <strong>1.4) Оскорбление родных</strong> — Оскорблять родных людей другого человека.
+                    <span class="punishment">Наказание: бан до 4 часов</span>
+                </div>
+                <div class="rule-item">
+                    <strong>1.6) Войс-Абуз</strong> — Орать/включать громкие звуки в войс чатах.
+                    <span class="punishment">Наказание: бан до 45 минут</span>
+                </div>
+            </section>
+
+            <section id="cheats-bugs" class="rule-section">
+                <h3>Читы и Багоюз</h3>
+                <div class="rule-item">
+                    <strong>1.8) Использование стороннего ПО</strong> — Сюда относится: читы, и все что вас делает солнечным.
+                    <span class="punishment">Наказание: перманентный бан (на усмотрение создателя А-С-Я-Н-А)</span>
+                </div>
+                <div class="rule-item">
+                    <strong>1.9) Баг-Абуз</strong> — Использование бага на карте либо в системе для какой-то выгоды в чем-то.
+                    <span class="punishment">Наказание: бан от 3 часов</span>
+                </div>
+            </section>
+
+            <section id="info-ads" class="rule-section">
+                <h3>Информация и Реклама</h3>
+                <div class="rule-item">
+                    <strong>1.7) Реклама</strong> — Реклама чужих проектов по Garry's Mod или Discord серверов и других площадок.
+                    <span class="punishment">Наказание: бан на 1 неделю</span>
+                </div>
+                <div class="rule-item">
+                    <strong>2.1) Распространение чужой информации</strong> — В любой форме (видео, фото, текстом).
+                    <span class="punishment">Наказание: бан до 7 дней</span>
+                </div>
+                <div class="rule-item">
+                    <strong>2.2) Диз-информация</strong> — Разглашение информации, которая не соответствует правде и которая может портить репутацию сервера.
+                    <span class="punishment">Наказание: бан до 2 дней</span>
+                </div>
+            </section>
+
+            <section id="behavior" class="rule-section">
+                <h3>Поведение и Контент</h3>
+                <div class="rule-item">
+                    <strong>2.3) Политика</strong> — Любое упоминание политики.
+                    <span class="punishment">Наказание: бан до 3 дней</span>
+                </div>
+                <div class="rule-item">
+                    <strong>2.4) 18+ контент</strong> — В любой форме (аватарка, ник, текст, звуки и т.д).
+                    <span class="punishment">Наказание: бан до 4 дней</span>
+                </div>
+            </section>
+
+            <h2 id="admins">Правила админов</h2>
+
+            <section id="admin-abuse" class="rule-section">
+                <h3>Admin Abuse</h3>
+                <div class="rule-item">
+                    <strong>1.3) АА</strong> — Использовать свои привилегии ради того чтобы мешать игровому геймплею другим.
+                    <span class="punishment">Наказание: 1 варн + 2 часа бана</span>
+                </div>
+            </section>
+
+            <section id="admin-inadequate" class="rule-section">
+                <h3>Неадекватность</h3>
+                <div class="rule-item">
+                    <strong>1.5) Неадекватность со стороны администрации</strong> — Спавнить непонятно зачем бесконечно пропов дохуя.
+                    <span class="punishment">Наказание: бан на 1 час, 1 варн</span>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Правая часть: Навигация (On this page) -->
+        <aside class="right-sidebar">
+            <div class="sidebar-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                На этой странице
+            </div>
+            <nav id="toc">
+                <ul>
+                    <div class="toc-indicator"></div>
+                    <li class="toc-header"><a href="#general">Общие правила</a></li>
+                    <li><a href="#rdm-tk">RDM / TK</a></li>
+                    <li><a href="#chat-voice">Чат и Войс</a></li>
+                    <li><a href="#cheats-bugs">Читы и Багоюз</a></li>
+                    <li><a href="#info-ads">Информация и Реклама</a></li>
+                    <li><a href="#behavior">Поведение и Контент</a></li>
+                    
+                    <li class="toc-header mt-10"><a href="#admins">Правила админов</a></li>
+                    <li><a href="#admin-abuse">Admin Abuse</a></li>
+                    <li><a href="#admin-inadequate">Неадекватность</a></li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

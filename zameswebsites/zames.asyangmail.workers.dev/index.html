@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ZAMES Server</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video autoplay loop muted playsinline class="bg-video">
+        <source src="videos/1.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-section">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="pngs/logo.png" alt="ZAMES Logo" class="logo-img">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-btn">Главная</a></li>
+                <li><a href="ier.html" class="nav-btn">Иерархия</a></li>
+                
+                <li class="dropdown">
+                    <button class="dropbtn" onclick="toggleDropdown()">Правила сервера</button>
+                    <div class="dropdown-content" id="rulesDropdown">
+                        <a href="rules.html#general">Общие правила</a>
+                        <a href="rules.html#admins">Правила админов</a>
+                    </div>
+                </li>
+
+                <!-- Разделитель и иконки -->
+                <li class="nav-divider"></li>
+                <li class="social-icon">
+                    <a href="https://discord.gg/5zP9sVWnsp" target="_blank">
+                        <img src="pngs/ds.png" alt="Discord">
+                    </a>
+                </li>
+                <li class="social-icon">
+                    <a href="https://www.youtube.com/@elpistrun" target="_blank">
+                        <img src="pngs/yt.png" alt="YouTube">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="center-logo-container">
+            <img src="pngs/logo1.png" alt="Center Logo" class="center-logo">
+        </div>
+    </div>
+
+    <div class="new-block">
+        leak by elpatron
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

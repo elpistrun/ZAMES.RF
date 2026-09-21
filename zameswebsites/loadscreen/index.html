@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Orphan`s City Life 2018</title>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('fonts/main.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+            background: #000; 
+            color: #fff; 
+            font-family: 'CustomFont', 'Segoe UI', sans-serif; 
+            cursor: pointer; 
+        }
+        
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease; }
+        .slide.active { opacity: 1; }
+
+        .vignette { position: absolute; width: 110%; height: 110%; top: -5%; left: -5%; background-image: url("vignette.png"); background-size: cover; background-position: center; animation: zoom 10s linear infinite; z-index: 1;}
+
+        .bg { position: absolute; width: 110%; height: 110%; top: -5%; left: -5%; background-size: cover; background-position: center; animation: zoom 10s linear infinite; z-index: 1;}
+        
+        .char { position: absolute; height: 110%; width: 50%; bottom: 0; background-size: contain; background-position: bottom center; background-repeat: no-repeat; z-index: 2;}
+        
+        .quote { position: absolute; width: 400px; font-size: 28px; font-weight: bold; text-shadow: 3px 3px 6px #000; padding: 20px; z-index: 5;}
+
+        /* Логотип в левом верхнем углу */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 656px;
+            height: 256px;
+            background-image: url("logo.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: top left;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+        
+        .move-right { animation: moveRight 20s linear; left: 10%; }
+        @keyframes moveRight { from { left: 10%; } to { left: 30%; } }
+
+        .move-left { animation: moveLeft 20s linear; right: 10%; }
+        @keyframes moveLeft { from { right: 10%; } to { right: 30%; } }
+        
+        .move-zoom { animation: moveZoom 15s linear; left: 30%; transform-origin: bottom; }
+        @keyframes moveZoom { from { transform: scale(0.8); } to { transform: scale(1); } }
+
+        .move-inzoom { animation: moveInZoom 15s linear; left: 32%; transform-origin: bottom; }
+        @keyframes moveInZoom { from { transform: scale(0.7); } to { transform: scale(0.4); } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="music/1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="logo"></div>
+
+    <div id="app"></div>
+
+    <script>
+        const slidesData = [
+            { folder: '1', quote: 'Я никогда не любил этот сервер..', pos: 'move-zoom', quotePos: 'bottom: 40%; left: 5%;' },
+            { folder: '2', quote: 'Меня расхуярило в начале раунда от кувалды', pos: 'move-left', quotePos: 'top: 15%; right: 10%;' },
+            { folder: '3', quote: 'POV: Я прописавши !viptest в чате , получив админку на сервере.', pos: 'move-right', quotePos: 'top: 25%; right: 10%;' },
+            { folder: '4', quote: 'А я всеволишь не лег на пол...', pos: 'move-right', quotePos: 'top: 25%; right: 10%;' },
+            { folder: '5', quote: 'Меня заставили это сделать, простите ребята', pos: 'move-right', quotePos: 'top: 25%; right: 10%;' },
+            { folder: '6', quote: 'АХВХАВХАХВАХ ЕБАТЬ ВЕСЕЛО ТУТ', pos: 'move-zoom', quotePos: 'top: 25%; right: 10%;' },
+            { folder: '7', quote: 'Нееееееееееееееееееееееет - Made in ChatGPT', pos: 'move-inzoom', quotePos: 'top: 40%; right: 10%;' }, // Изменено здесь
+        ];
+
+        let queue = [];
+        let typingInterval = null;
+        const app = document.getElementById('app');
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.07;
+
+        window.GameDetails = function(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Browser error sound.."));
+            }
+        };
+
+        document.body.addEventListener('click', () => {
+            if (audio.paused) audio.play();
+        }, { once: true });
+
+        function getNextSlide() {
+            if (queue.length === 0) {
+                queue = [...slidesData]; 
+                for (let i = queue.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [queue[i], queue[j]] = [queue[j], queue[i]];
+                }
+            }
+            return queue.pop();
+        }
+
+        function typeText(element, text, speed = 50) {
+            if (typingInterval) clearInterval(typingInterval);
+            element.textContent = '';
+            let index = 0;
+            
+            typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, speed);
+        }
+
+        function showSlide() {
+            const s = getNextSlide();
+            const path = `lore/${s.folder}`;
+            
+            const newSlide = document.createElement('div');
+            newSlide.className = 'slide';
+            newSlide.innerHTML = `
+                <div class="bg" style="background-image: url('${path}/bg.png')"></div>
+                <div class="char ${s.pos}" style="background-image: url('${path}/char.png')"></div>
+                <div class="vignette"></div>
+                <div class="quote" style="${s.quotePos}"></div>
+            `;
+            
+            app.innerHTML = ''; 
+            app.appendChild(newSlide);
+            
+            const quoteElem = newSlide.querySelector('.quote');
+
+            setTimeout(() => {
+                newSlide.classList.add('active');
+                typeText(quoteElem, s.quote, 50);
+            }, 50); 
+            
+            setTimeout(() => {
+                newSlide.classList.remove('active');
+                
+                setTimeout(() => {
+                    showSlide();
+                }, 1000);
+            }, 9000);
+        }
+
+        showSlide();
+    </script>
+</body>
+</html>
